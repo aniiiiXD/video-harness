@@ -1,0 +1,12 @@
+{
+  "name": "video-harness",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Agent toolkit for product journeys, wireframes and motion films",
+  "bin": {"video-harness": "bin/vh.mjs", "vh": "bin/vh.mjs"},
+  "files": ["bin", "lib", "adapters", "templates", "skills", "docs", "test", "scripts", "README.md", "CONTRIBUTING.md", "LICENSE"],
+  "license": "MIT",
+  "engines": {"node": ">=22"},
+  "scripts": {"test": "node --test", "pack:release": "node scripts/package.mjs"}
+}

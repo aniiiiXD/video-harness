@@ -1,0 +1,8 @@
+{
+  "name": "product-journey-film",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"preview":"remotion studio src/index.jsx --no-open","render":"remotion render src/index.jsx Journey out/film.mp4 --codec h264"},
+  "dependencies": {"remotion":"4.0.543","@remotion/cli":"4.0.543","@remotion/media":"4.0.543","react":"19.3.1","react-dom":"19.3.1"}
+}

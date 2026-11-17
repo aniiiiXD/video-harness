@@ -1,0 +1,15 @@
+{
+  "version":1,
+  "name":"Relay — from request to resolution",
+  "width":1920,"height":1080,"fps":30,
+  "brand":{"background":"#F0F1F5","foreground":"#172745","accent":"#345BE8","fontFamily":"Arial, sans-serif"},
+  "assets":[{"id":"relay-workspace","kind":"image","path":"assets/relay-workspace.svg","source":"Original synthetic example included with Video Harness","license":"MIT","reviewed":true}],
+  "scenes":[
+    {"id":"promise","type":"title","seconds":4,"headline":"Every request.\nA clear next step.","body":"Relay · A fictional product journey","evidence":{"kind":"concept"}},
+    {"id":"journey","type":"journey","seconds":6,"headline":"Follow the work.","steps":["Receive","Understand","Assign","Resolve"],"body":"A request moves through four deliberate states.","evidence":{"kind":"concept"}},
+    {"id":"workspace","type":"wireframe","seconds":6,"headline":"Start with the right context.","body":"The request, owner and next action stay together.","asset":"relay-workspace","camera":{"from":1,"to":1.4,"focus":[0.5,0.38]},"evidence":{"kind":"concept"}},
+    {"id":"comparison","type":"comparison","seconds":5,"headline":"Turn an inbox into a decision.","before":"A request with no owner.","after":"An assigned next step, ready to review.","evidence":{"kind":"concept"}},
+    {"id":"handoff","type":"journey","seconds":6,"headline":"Keep people in the loop.","steps":["Draft action","Review","Approve"],"body":"The reviewer sees what happens next.","evidence":{"kind":"concept"}},
+    {"id":"close","type":"title","seconds":4,"headline":"Make the next move clear.","body":"Relay · Product concept","evidence":{"kind":"concept"}}
+  ]
+}

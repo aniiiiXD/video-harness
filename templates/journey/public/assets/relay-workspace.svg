@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="900" viewBox="0 0 1440 900">
+<rect width="1440" height="900" rx="24" fill="#ffffff"/>
+<path d="M250 0V900M250 100H1440" stroke="#dce1ed" stroke-width="2"/>
+<g font-family="Arial,sans-serif" fill="#172745">
+<text x="38" y="64" font-size="34" font-weight="700">relay</text>
+<text x="38" y="170" font-size="22">Workspace</text><text x="38" y="225" font-size="22" fill="#345be8">Requests</text><text x="38" y="280" font-size="22">Team</text>
+<text x="300" y="61" font-size="24">Operations / Requests</text>
+<text x="310" y="181" font-size="40" font-weight="700">An owner for every next step.</text>
+<text x="310" y="226" font-size="20" fill="#68758c">Synthetic product concept · Thursday, 14 May</text>
+<rect x="310" y="280" width="1050" height="210" rx="14" fill="#f1f4fb"/>
+<text x="340" y="328" font-size="18" fill="#68758c">REQUEST R-104</text>
+<text x="340" y="378" font-size="30" font-weight="700">Review the new supplier brief</text>
+<text x="340" y="423" font-size="22">Owner: Alex Morgan</text><text x="340" y="460" font-size="22">Next: Compare delivery requirements</text>
+<rect x="310" y="525" width="1050" height="230" rx="14" fill="#172745"/>
+<text x="342" y="575" font-size="18" fill="#aebedb">PROPOSED ACTION</text>
+<text x="342" y="626" font-size="29" fill="white">Send the reviewed brief to the operations lead.</text>
+<rect x="342" y="666" width="230" height="55" rx="10" fill="#345be8"/>
+<text x="370" y="701" font-size="21" fill="white">Review action</text>
+<text x="310" y="825" font-size="20" fill="#68758c">You decide when the work moves forward.</text>
+</g></svg>
