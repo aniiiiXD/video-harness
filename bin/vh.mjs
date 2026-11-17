@@ -6,7 +6,7 @@ import {init,build,validate,requireValid,storyboard,json,root} from '../lib/proj
 import {importAsset,pencilExport} from '../lib/import.mjs';
 import {searchImages,fetchImage} from '../lib/images.mjs';
 
-const help=`Video Harness 0.2 — agent-assisted product journey films
+const help=`Video Harness 0.3 — agent-assisted product journey films
 
 vh init <new-folder>                         Create example, renderer and local skills
 vh validate <project>                        Check timeline, assets and evidence records
@@ -21,6 +21,9 @@ vh images <query> --out <results.json> [--provider commons|pexels]
 vh fetch-image <project> <results.json> --index <n> --id <asset-id>
 vh skills <folder>                           Copy skills to a NEW destination folder
 vh doctor                                   Check Node, OpenPencil and Codex availability
+vh mcp --workspace <folder>                  MCP over stdio for compatible agents
+vh serve --workspace <folder> [--port 8787] [--host 127.0.0.1]
+                                            Authenticated Streamable HTTP MCP
 
 Image search returns candidates; fetch-image explicitly downloads one. Inspect it
 before setting reviewed:true. Suno is optional and never called by these commands.
@@ -42,6 +45,14 @@ const run=(exe,args,cwd)=>new Promise((resolve,reject)=>{
 });
 async function main(){
   switch(command){
+    case 'mcp':case 'serve':{
+      const {serveStdio,serveHttp}=await import('../lib/mcp.mjs');
+      const workspace=options.workspace??process.env.VIDEO_HARNESS_WORKSPACE;
+      if(!workspace)throw new Error('--workspace or VIDEO_HARNESS_WORKSPACE is required');
+      if(command==='mcp')await serveStdio(workspace);
+      else await serveHttp(workspace,{port:options.port?Number(options.port):8787,host:options.host??'127.0.0.1'});
+      break;
+    }
     case undefined:case 'help':case '--help': console.log(help);return;
     case 'init':await init(directory());console.log(`Created ${directory()}\nNext: vh setup "${directory()}" then vh preview "${directory()}"`);break;
     case 'validate':{const r=await validate(directory());console.log(json({errors:r.errors,warnings:r.warnings,frames:r.frames,seconds:r.seconds}));if(r.errors.length)process.exitCode=1;break;}

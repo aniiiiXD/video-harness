@@ -17,6 +17,8 @@ Scenes have unique `id`, `type`, `seconds` (1–30), `headline` (1–85 characte
 | comparison | `before`, `after`: up to 110 characters each |
 | metric | numeric `from`, `to`, short `unit`; show denominator/context in body/source |
 
-Camera: `{ "from": 1, "to": 1.6, "focus": [0.67, 0.52] }`. Scales are 1–3, focus coordinates are 0–1. Screens use contain, footage uses cover. Review footage crops manually. Videos currently start at their first frame and are muted; choose sources long enough for their scene. For a custom trim, add explicit media timing in scene code. Audio is a single optional bed; detailed cue mixing is a later extension.
+Camera: `{ "from": 1, "to": 1.6, "focus": [0.67, 0.52] }`. Scales are 1–3, focus coordinates are 0–1. Screens use contain, footage uses cover. Review footage crops manually. Videos currently start at their first frame and are muted; choose sources long enough for their scene. For a custom trim, add explicit media timing in scene code.
+
+Music uses optional `audio: {asset: "music-id"}`. Independent narration uses `narration: [{asset: "voice-id", startSeconds: 0, durationSeconds: 2.4, volume: 1}]`. Both references must point to audio assets. Cue start is nonnegative, duration positive, volume 0–1, and the cue must end within the film. Use measured voice duration; there is no automatic stretching or ducking. Older custom Scene.jsx files need the new Soundtrack component to play narration; the harness never overwrites custom source during an update.
 
 `vh build` regenerates `src/timeline.generated.jsx` with separate authored Sequence nodes. User edits belong in `film.json` and `src/Scene.jsx`, never the generated file. Scene code is intentionally editable: this is an agent toolkit, not a closed template editor.

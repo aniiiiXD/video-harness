@@ -1,8 +1,14 @@
 # Video Harness
 
-A local-first toolkit for coding agents and people making product journeys, wireframe walkthroughs and launch films. Bring a product brief, design files, brand and assets; work with your agent to build and revise an editable film.
+A connectable video toolkit for agents making product journeys, wireframe walkthroughs and launch films. Bring a product brief, design files, brand and assets; work with your preferred agent to build and revise an editable film. MCP exposes the same tools over local stdio or authenticated HTTP.
 
-**This is an early developer release.** It includes working project/build/import commands, six starter scene types, four agent skills, image search, and a Suno adapter. It is not an autonomous one-prompt video service. The agent handles narrative and custom scene design; the CLI validates and renders that work.
+**This is an early developer release.** It includes project/build/import commands, six starter scene types, four portable skills, image search, a Smallest.ai TTS adapter and an optional Suno host adapter. The agent handles narrative and custom scene design; the harness validates and renders that work. There is no publicly hosted service yet.
+
+## Connect
+
+Run `npm ci`, then `node bin/vh.mjs mcp --workspace /absolute/path/to/films` from an MCP client's server configuration. For a remote team server, use `vh serve` with a persistent workspace and private bearer token. See [connection instructions](docs/CONNECT.md) for client JSON, HTTP hosting and the supported workflow.
+
+The HTTP server is a single trusted workspace. Public customer accounts and isolated cloud workers are not implemented. Reasoning models are chosen by the connecting client; narration uses a separate provider adapter.
 
 ## Install and try
 
@@ -35,7 +41,9 @@ Skills are copied into `.agents/skills` inside each project, with an `AGENTS.md`
 | Image search | Commons without a key; optional Pexels with your own API key |
 | Asset records | Source, license, author, review status and hashes kept with imports |
 | Agent skills | Journey direction, image sourcing, OpenPencil handoff and motion review |
+| MCP | Sixteen tools, four skill resources, directing prompt; stdio and authenticated Streamable HTTP |
 | Preview/export | Remotion Studio and explicit H.264 MP4 export |
+| Narration | Smallest.ai Pro voices, prepared generation plans, persisted receipts and independent voice cues |
 | Suno | Official MCP setup plus a host adapter; sign-in and live tool mapping remain separate |
 
 ## Everyday commands
@@ -74,19 +82,20 @@ For Pexels set `PEXELS_API_KEY` locally, then add `--provider pexels` to search.
 
 The same timeline drives preview and export. Original design files, references and evidence stay attributable. Providers remain optional: a film can use supplied images/music and run without Suno or a stock API key. No Clove assets, personal account files or third-party skill packs are included.
 
-Read [project format](docs/PROJECT-FORMAT.md), [Suno adapter](docs/SUNO.md) and [release checks](docs/RELEASE-CHECKS.md).
+Read [project format](docs/PROJECT-FORMAT.md), [Smallest.ai narration](docs/SMALLEST.md), [Suno adapter](docs/SUNO.md) and [release checks](docs/RELEASE-CHECKS.md).
 
 ## Limits and next steps
 
-This release targets 16:9 local workflows. It has no hosted collaboration, automatic full-film visual judgement, durable cloud render queue, integrated music generation UI or automatic layered design conversion. Video sources should cover their scene duration; custom trims and audio cue mixing require scene code edits. System-font rendering can vary across machines.
+This release targets 16:9 films on a persistent trusted host. It has no customer account isolation, automatic full-film visual judgement, distributed render queue, integrated music generation UI or automatic layered design conversion. Video sources should cover their scene duration; custom trims and advanced mixing require scene code edits. System-font rendering can vary across machines. Smallest.ai is tested with mocked API responses; live voice generation has not been verified.
 
-Next: a second-brand acceptance film, per-scene revision controls, persisted job/credit records, and audio provider result mapping after live authentication. See [contributing](CONTRIBUTING.md) for development expectations.
+Next: a second-brand acceptance film, customer isolation and hosting, remote uploads, and Suno result mapping after live authentication. See [contributing](CONTRIBUTING.md) for development expectations.
 
 The original toolkit code and synthetic sample are MIT licensed. Remotion, OpenPencil, stock assets and provider services have their own licenses/terms; check their current requirements for your use. No third-party packages are bundled in the source archive.
 
 ## Development
 
 ```sh
+npm ci
 npm test
 npm run pack:release
 ```

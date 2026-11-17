@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill,CanvasImage,Interactive,staticFile,useCurrentFrame,useVideoConfig,interpolate,Easing} from 'remotion';
+import {AbsoluteFill,CanvasImage,Interactive,Sequence,staticFile,useCurrentFrame,useVideoConfig,interpolate,Easing} from 'remotion';
 import {Video,Audio} from '@remotion/media';
 
 const ease=Easing.bezier(.16,1,.3,1);
@@ -79,9 +79,16 @@ function Metric({scene,brand}) {
 }
 
 export function Soundtrack({project}) {
-  if(!project.audio)return null;
-  const asset=project.assets.find(a=>a.id===project.audio.asset);
-  return <Audio src={staticFile(asset.path)} volume={.65}/>;
+  const asset=project.assets.find(a=>a.id===project.audio?.asset);
+  return <>
+    {asset&&<Audio src={staticFile(asset.path)} volume={.65}/>}
+    {(project.narration??[]).map((cue,i)=>{
+      const voice=project.assets.find(a=>a.id===cue.asset);
+      return <Sequence key={i} name={`Narration ${cue.asset}`} from={Math.round(cue.startSeconds*project.fps)} durationInFrames={Math.ceil(cue.durationSeconds*project.fps)}>
+        <Audio src={staticFile(voice.path)} volume={cue.volume??1}/>
+      </Sequence>;
+    })}
+  </>;
 }
 
 export function Scene({scene,project}) {
