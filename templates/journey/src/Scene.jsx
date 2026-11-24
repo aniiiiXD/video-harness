@@ -1,6 +1,8 @@
 import React from 'react';
 import {AbsoluteFill,CanvasImage,Interactive,Sequence,staticFile,useCurrentFrame,useVideoConfig,interpolate,Easing} from 'remotion';
 import {Video,Audio} from '@remotion/media';
+import {Title} from './Title';
+import {fontFamily} from './typography';
 
 const ease=Easing.bezier(.16,1,.3,1);
 const progress=(f,start,length)=>interpolate(f,[start,start+length],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp',easing:ease});
@@ -8,8 +10,9 @@ const textStyle={fontWeight:700,letterSpacing:'-0.055em',lineHeight:1.02,margin:
 
 function Heading({scene,brand,center=false}) {
   const f=useCurrentFrame(),{fps}=useVideoConfig();
+  if(scene.typography)return <Title scene={scene} brand={brand}/>;
   return <Interactive.Div name="Scene statement" style={{position:'absolute',left:center?180:120,top:center?310:125,width:center?1560:1680,textAlign:center?'center':'left',color:brand.foreground,opacity:interpolate(f,[0,.23*fps],[0,1],{extrapolateLeft:'clamp',extrapolateRight:'clamp'}),translate:interpolate(f,[0,.6*fps],['0px 48px','0px 0px'],{easing:ease,extrapolateLeft:'clamp',extrapolateRight:'clamp'})}}>
-    <h1 style={{...textStyle,fontSize:center?126:86,maxWidth:'100%',overflowWrap:'break-word',whiteSpace:'pre-line'}}>{scene.headline}</h1>
+    <h1 style={{...textStyle,fontFamily:fontFamily(brand,'display'),fontSize:center?126:86,maxWidth:'100%',overflowWrap:'break-word',whiteSpace:'pre-line'}}>{scene.headline}</h1>
     {scene.body&&<p style={{fontSize:29,lineHeight:1.5,fontWeight:400,letterSpacing:'-.015em',marginTop:30,maxWidth:center?1300:1500,marginLeft:center?'auto':0,marginRight:center?'auto':0}}>{scene.body}</p>}
   </Interactive.Div>;
 }
@@ -93,9 +96,12 @@ export function Soundtrack({project}) {
 
 export function Scene({scene,project}) {
   const brand=project.brand,f=useCurrentFrame(),{fps}=useVideoConfig();
+  if(scene.type==='title'&&scene.typography) {
+    return <AbsoluteFill style={{background:brand.background}}><Title scene={scene} brand={brand}/></AbsoluteFill>;
+  }
   const full=scene.type==='footage';
   const disclosure=scene.evidence.kind==='concept'?'Illustrative product concept':`${scene.evidence.kind==='recorded'?'Recorded example':'Source-backed claim'} · ${scene.evidence.source}`;
-  return <AbsoluteFill style={{background:brand.background,color:brand.foreground,fontFamily:brand.fontFamily,overflow:'hidden'}}>
+  return <AbsoluteFill style={{background:brand.background,color:brand.foreground,fontFamily:fontFamily(brand,'body'),overflow:'hidden'}}>
     <AbsoluteFill style={{background:`radial-gradient(ellipse at 80% 85%,${brand.accent}12,transparent 65%)`}}/>
     {scene.type==='title'&&<><div style={{position:'absolute',left:850,top:150,width:220,height:7,background:brand.accent,transform:`scaleX(${progress(f,0,.5*fps)})`}}/><Heading scene={scene} brand={brand} center/><div style={{position:'absolute',left:840,top:790,width:240,height:110,opacity:.35}}><svg width="240" height="110"><circle cx="75" cy="55" r="42" fill="none" stroke={brand.accent} strokeWidth="2"/><circle cx={125+20*progress(f,0,1.5*fps)} cy="55" r="42" fill="none" stroke={brand.accent} strokeWidth="2"/></svg></div></>}
     {scene.type==='journey'&&<Journey scene={scene} brand={brand}/>}

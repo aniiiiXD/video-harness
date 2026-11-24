@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
+import {execFile} from 'node:child_process';
+import {promisify} from 'node:util';
 import {Client} from '@modelcontextprotocol/sdk/client/index.js';
 import {InMemoryTransport} from '@modelcontextprotocol/sdk/inMemory.js';
 import {StreamableHTTPClientTransport} from '@modelcontextprotocol/sdk/client/streamableHttp.js';
@@ -16,13 +18,20 @@ import {root} from '../lib/project.mjs';
 function wav(seconds=1){const data=Buffer.alloc(44+24000*2*seconds);data.write('RIFF');data.writeUInt32LE(data.length-8,4);data.write('WAVEfmt ',8);data.writeUInt32LE(16,16);data.writeUInt16LE(1,20);data.writeUInt16LE(1,22);data.writeUInt32LE(24000,24);data.writeUInt32LE(48000,28);data.writeUInt16LE(2,32);data.writeUInt16LE(16,34);data.write('data',36);data.writeUInt32LE(data.length-44,40);return data;}
 async function fixture(t,options){const dir=await fs.mkdtemp(path.join(os.tmpdir(),'vh-mcp-'));t.after(()=>fs.rm(dir,{recursive:true,force:true}));return new Workspace(dir,options).ready();}
 const decode=result=>JSON.parse(result.content[0].text);
+const exec=promisify(execFile);
 
 test('MCP client discovers tools, reads skills and revises a film with conflict protection',async t=>{
  const w=await fixture(t),server=createServer(w),client=new Client({name:'test-agent',version:'1'});
  const [a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);t.after(()=>client.close());
- const tools=(await client.listTools()).tools.map(x=>x.name);for(const name of ['project_create','tts_prepare','render_start','design_export'])assert.ok(tools.includes(name));
- assert.equal((await client.listResources()).resources.length,4);
+ const tools=(await client.listTools()).tools.map(x=>x.name);for(const name of ['project_create','tts_prepare','render_start','design_export','fonts_search','font_fetch','review_frame'])assert.ok(tools.includes(name));
+ assert.equal((await client.listResources()).resources.length,6);
  assert.match((await client.readResource({uri:'video-harness://skills/journey-director'})).contents[0].text,/journey/i);
+ assert.match((await client.readResource({uri:'video-harness://skills/talking-head-edit'})).contents[0].text,/behind the face/i);
+ assert.match((await client.readResource({uri:'video-harness://skills/motion-typography'})).contents[0].text,/tracking/);
+ const prompt=await client.getPrompt({name:'direct-film',arguments:{brief:'Make a product walkthrough.'}});
+ assert.match(prompt.messages[0].content.text,/review_frame/);
+ const fonts=decode(await client.callTool({name:'fonts_search',arguments:{query:'quiet editorial',role:'display'}}));
+ assert.equal(fonts.results[0].family,'Instrument Serif');
  const created=decode(await client.callTool({name:'project_create',arguments:{projectId:'relay'}}));
  assert.equal(created.validation.frames,930);created.manifest.name='A second brand';
  const changed=await client.callTool({name:'project_update',arguments:{projectId:'relay',revision:created.revision,manifest:created.manifest}});assert.ok(!changed.isError);
@@ -31,6 +40,86 @@ test('MCP client discovers tools, reads skills and revises a film with conflict 
  await assert.rejects(w.update('relay',latest.manifest,latest.revision),/headline/);
  assert.equal((await w.read('relay')).manifest.scenes[0].headline,created.manifest.scenes[0].headline);
  await assert.rejects(w.read('../escape'));
+});
+
+test('MCP and CLI give the reviewer frames from the rendered film',async t=>{
+ try {
+   await exec('ffmpeg',['-version']);
+   await exec('ffprobe',['-version']);
+ } catch(error) {
+   if(error.code!=='ENOENT')throw error;
+   t.skip('FFmpeg is optional and unavailable on this host');
+   return;
+ }
+
+ const w=await fixture(t),server=createServer(w),client=new Client({name:'review-agent',version:'1'});
+ const [a,b]=InMemoryTransport.createLinkedPair();
+ await server.connect(a);
+ await client.connect(b);
+ t.after(()=>client.close());
+ const projectId='review-film';
+ await w.create(projectId);
+ const call=atSeconds=>client.callTool({name:'review_frame',arguments:{projectId,atSeconds}});
+ const missing=await call(0.25);
+ assert.equal(missing.isError,true);
+ assert.match(decode(missing).error,/Render the film first/);
+
+ const dir=await w.project(projectId);
+ const out=path.join(dir,'out');
+ await fs.mkdir(out,{recursive:true});
+ await exec('ffmpeg',['-v','error','-nostdin','-f','lavfi','-i','testsrc2=size=64x48:rate=24:duration=2',
+   '-c:v','mpeg4',path.join(out,'film.mp4')]);
+
+ const first=await call(0.25);
+ assert.equal(decode(first).atSeconds,0.25);
+ assert.equal(first.content[1].type,'image');
+ assert.equal(first.content[1].mimeType,'image/jpeg');
+ const jpeg=Buffer.from(first.content[1].data,'base64');
+ assert.equal(jpeg.readUInt16BE(0),0xffd8);
+ const later=await call(1.25);
+ assert.notDeepEqual(Buffer.from(later.content[1].data,'base64'),jpeg);
+ const closing=await call(1.999);
+ assert.equal(closing.content[1].mimeType,'image/jpeg');
+ const pastEnd=await call(3);
+ assert.equal(pastEnd.isError,true);
+ assert.match(decode(pastEnd).error,/No frame at 3s/);
+
+ const imageFile=path.join(out,'frame.jpg');
+ await exec(process.execPath,[path.join(root,'bin/vh.mjs'),'review-frame',dir,'--at','0.25','--out',imageFile]);
+ assert.deepEqual(await fs.readFile(imageFile),jpeg);
+});
+
+test('CLI and MCP carry the same creative brief across sessions and concurrent edits',async t=>{
+ const w=await fixture(t),server=createServer(w),client=new Client({name:'brief-agent',version:'1'});
+ const [a,b]=InMemoryTransport.createLinkedPair();
+ await server.connect(a);
+ await client.connect(b);
+ t.after(()=>client.close());
+ const projectId='new-reel';
+ const created=await w.create(projectId);
+ const call=(name,arguments_)=>client.callTool({name,arguments:{projectId,...arguments_}});
+ const cli=async(...args)=>JSON.parse((await exec(process.execPath,[
+  path.join(root,'bin/vh.mjs'),'brief',path.join(w.directory,projectId),...args
+ ])).stdout);
+
+ assert.equal(decode(await call('project_brief_read')).questions.length,3);
+ const request=await cli('--request','Make a Reel from the original recording');
+ assert.equal(request.questions.length,2);
+ const [,direction]=await Promise.all([
+  cli('--note','Opening scene is ready for review'),
+  call('project_brief_update',{look:'Punchy with titles behind the speaker',format:'9:16 Reel'})
+ ]);
+ assert.ok(!direction.isError);
+ const resumed=await cli();
+ assert.equal(resumed.request,request.request);
+ assert.equal(resumed.look,'Punchy with titles behind the speaker');
+ assert.equal(resumed.format,'9:16 Reel');
+ assert.equal(resumed.note,'Opening scene is ready for review');
+ assert.equal(resumed.history.length,3);
+ assert.deepEqual(resumed.questions,[]);
+ assert.deepEqual(decode(await call('project_brief_read')),resumed);
+ assert.equal((await call('project_brief_update',{})).isError,true);
+ assert.equal((await w.read(projectId)).revision,created.revision);
 });
 
 test('Smallest adapter uses Pro voice catalog and authenticates synthesis without exposing secrets',async()=>{
@@ -90,7 +179,7 @@ test('stdio executable connects without contaminating the MCP stream',async t=>{
  const w=await fixture(t),client=new Client({name:'stdio-agent',version:'1'});
  const transport=new StdioClientTransport({command:process.execPath,args:[path.join(root,'bin/vh.mjs'),'mcp','--workspace',w.directory],stderr:'pipe'});
  await client.connect(transport);t.after(()=>client.close());
- assert.equal((await client.listResources()).resources.length,4);
+ assert.equal((await client.listResources()).resources.length,6);
  assert.equal(decode(await client.callTool({name:'project_create',arguments:{projectId:'stdio-film'}})).validation.seconds,31);
 });
 

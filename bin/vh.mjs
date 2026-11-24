@@ -5,20 +5,32 @@ import {spawn} from 'node:child_process';
 import {init,build,validate,requireValid,storyboard,json,root} from '../lib/project.mjs';
 import {importAsset,pencilExport} from '../lib/import.mjs';
 import {searchImages,fetchImage} from '../lib/images.mjs';
+import {readBrief,updateBrief} from '../lib/brief.mjs';
+import {fetchCatalogFont,findFonts} from '../lib/font-catalog.mjs';
+import {readReviewFrame} from '../lib/review.mjs';
 
 const help=`Video Harness 0.3 — agent-assisted product journey films
 
 vh init <new-folder>                         Create example, renderer and local skills
+vh brief <project>                           Read saved direction, open questions and edit history
+vh brief <project> [--request <text>] [--look <text>] [--format <text>] [--note <text>]
+                                            Save creative direction or pick up an existing edit
 vh validate <project>                        Check timeline, assets and evidence records
 vh storyboard <project>                      Write out/storyboard.md and .json
 vh build <project>                           Compile film.json into editable scene nodes
 vh setup <project>                           Install pinned renderer dependencies
 vh preview <project>                         Build and start local Remotion Studio
 vh render <project>                          Explicitly export out/film.mp4
-vh import <project> <file> --id <id> --source <text> --license <text> [--kind image|video|audio]
+vh review-frame <project> --at <seconds> --out <image.jpg>
+                                            Extract a frame from the export with FFmpeg
+vh import <project> <file> --id <id> --source <text> --license <text> [--kind image|video|audio|font]
+                                            Fonts can set --role display|body|face-title|caption and --weight <value>
 vh pencil-export <project> <design.fig> --node <id> --id <asset-id> [--license <text>]
 vh images <query> --out <results.json> [--provider commons|pexels]
 vh fetch-image <project> <results.json> --index <n> --id <asset-id>
+vh fonts [query] [--role display|body|face-title|caption] [--limit <n>]
+vh fonts [family-query] --provider google [--category <id>] [--language <tag>] [--limit <n>]
+vh fetch-font <project> <catalog-id> [--role <role>] [--id <asset-id>]
 vh skills <folder>                           Copy skills to a NEW destination folder
 vh doctor                                   Check Node, OpenPencil and Codex availability
 vh mcp --workspace <folder>                  MCP over stdio for compatible agents
@@ -55,9 +67,23 @@ async function main(){
     }
     case undefined:case 'help':case '--help': console.log(help);return;
     case 'init':await init(directory());console.log(`Created ${directory()}\nNext: vh setup "${directory()}" then vh preview "${directory()}"`);break;
+    case 'brief':{
+      const dir=directory();
+      if(positional.length!==1)throw new Error('Usage: vh brief <project> [--request <text>] [--look <text>] [--format <text>] [--note <text>]');
+      console.log(json(Object.keys(options).length?await updateBrief(dir,options):await readBrief(dir)));
+      break;
+    }
     case 'validate':{const r=await validate(directory());console.log(json({errors:r.errors,warnings:r.warnings,frames:r.frames,seconds:r.seconds}));if(r.errors.length)process.exitCode=1;break;}
     case 'build':{const r=await build(directory());console.log(`Built ${r.project.scenes.length} scenes / ${r.seconds}s`);break;}
     case 'storyboard':await storyboard(directory());console.log('Wrote out/storyboard.md and out/storyboard.json');break;
+    case 'review-frame':{
+      if(!options.out)throw new Error('--out is required');
+      const atSeconds=Number(options.at);
+      const image=await readReviewFrame(directory(),atSeconds);
+      await fs.writeFile(path.resolve(options.out),image,{flag:'wx'});
+      console.log(`Saved frame at ${atSeconds}s to ${options.out}`);
+      break;
+    }
     case 'import':console.log(json(await importAsset(directory(),positional[1],options)));break;
     case 'pencil-export':console.log(json(await pencilExport(directory(),positional[1],options)));break;
     case 'images':{
@@ -71,6 +97,12 @@ async function main(){
       const catalog=JSON.parse(await fs.readFile(positional[1],'utf8'));
       console.log(json(await fetchImage(directory(),catalog,Number(options.index),options.id)));break;
     }
+    case 'fonts':{
+      const {provider,role,category,language,limit}=options;
+      console.log(json(await findFonts(positional.join(' '),{provider,role,category,language,limit})));
+      break;
+    }
+    case 'fetch-font':console.log(json(await fetchCatalogFont(directory(),positional[1],{id:options.id,role:options.role})));break;
     case 'skills':await fs.mkdir(directory());await fs.cp(path.join(root,'skills'),directory(),{recursive:true});console.log('Skills copied');break;
     case 'setup':await requireValid(directory());await run(process.platform==='win32'?'npm.cmd':'npm',['install'],directory());break;
     case 'preview':case 'render':{

@@ -1,0 +1,882 @@
+{
+  "revision": "06bfe0d62a98375cb09c942fa18e68bd32cff057",
+  "fonts": [
+    {
+      "id": "instrument-serif",
+      "family": "Instrument Serif",
+      "group": "Editorial serifs",
+      "style": "High-contrast serif",
+      "character": "Quiet, intimate, photographic",
+      "use": "Fashion films and opening credits",
+      "direction": "Hold a sentence-case title on a hard cut over an uncluttered frame.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "cinematic",
+        "quiet",
+        "fashion",
+        "editorial",
+        "heritage"
+      ],
+      "sample": "After the Rain",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/instrumentserif/InstrumentSerif-Regular.ttf",
+      "sha256": "498efd461f6ddfcb7a111bf9a565709d2085d48201d501ead960d93e84ffbb88",
+      "licenseSha256": "129ed7618959716959f2941fdd5b49e0ad6e6c1d78726761786a00253d865521"
+    },
+    {
+      "id": "bodoni-moda",
+      "family": "Bodoni Moda",
+      "group": "Editorial serifs",
+      "style": "Modern serif with fine hairlines",
+      "character": "Formal, theatrical, fashion-led",
+      "use": "Fashion campaigns and end titles",
+      "direction": "Set it large on a still plate and check that the thin strokes survive the export.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "luxury",
+        "formal",
+        "fashion",
+        "editorial",
+        "luxury"
+      ],
+      "sample": "Evening Edition",
+      "sampleWeight": 500,
+      "weight": "400 900",
+      "axes": [
+        "wght",
+        "opsz"
+      ],
+      "file": "ofl/bodonimoda/BodoniModa[opsz,wght].ttf",
+      "sha256": "550f5e34ee0a828d7941b1fe9bc58b34e5260d3f33a61532e6d0a0114e79a5cf",
+      "licenseSha256": "931dfe2e0cd3c9443295f5c1d754b8a8403bf060df50c1d5900267ade83d0046"
+    },
+    {
+      "id": "cormorant-garamond",
+      "family": "Cormorant Garamond",
+      "group": "Editorial serifs",
+      "style": "Old-style display serif",
+      "character": "Literary, composed, archival",
+      "use": "Period-inspired titles and longform interviews",
+      "direction": "Set a short name with generous margins and a long reading hold.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "classical",
+        "literary",
+        "archival",
+        "heritage",
+        "cinematic"
+      ],
+      "sample": "The Private Archive",
+      "sampleWeight": 600,
+      "weight": "300 700",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/cormorantgaramond/CormorantGaramond[wght].ttf",
+      "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0",
+      "licenseSha256": "60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956"
+    },
+    {
+      "id": "fraunces",
+      "family": "Fraunces",
+      "group": "Editorial serifs",
+      "style": "Soft display serif",
+      "character": "Warm, curious, handmade",
+      "use": "Food, craft and indie openings",
+      "direction": "Let one short phrase fill the frame, then cut to the subject on the next beat.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "warm",
+        "tactile",
+        "craft",
+        "indie",
+        "food",
+        "vintage"
+      ],
+      "sample": "Made by Hand",
+      "sampleWeight": 700,
+      "weight": "100 900",
+      "axes": [
+        "opsz",
+        "wght",
+        "SOFT",
+        "WONK"
+      ],
+      "file": "ofl/fraunces/Fraunces[SOFT,WONK,opsz,wght].ttf",
+      "sha256": "177ff6c0f14e5550a3c624247cd1189611d4eb65d000b14944c63d967958abbb",
+      "licenseSha256": "bdf4c22802eaf804f998195871c6b8938aac2ac14b2d78a8bd66a6f1eced833b"
+    },
+    {
+      "id": "newsreader",
+      "family": "Newsreader",
+      "group": "Editorial serifs",
+      "style": "Reading serif with optical sizes",
+      "character": "Measured, reflective, bookish",
+      "use": "Documentary quotations and essays",
+      "direction": "Keep longer copy left-aligned and hold it through the voiceover phrase.",
+      "roles": [
+        "display",
+        "body"
+      ],
+      "keywords": [
+        "documentary",
+        "editorial",
+        "reading",
+        "reflective",
+        "quiet"
+      ],
+      "sample": "From the Field Notes",
+      "sampleWeight": 500,
+      "weight": "200 800",
+      "axes": [
+        "wght",
+        "opsz"
+      ],
+      "file": "ofl/newsreader/Newsreader[opsz,wght].ttf",
+      "sha256": "8a08d13f8a6c0d51be379a60af84f945f65369a67e509ee3c3bdcc421254d7c1",
+      "licenseSha256": "fdfad38143ec470553cae82a1e45320bdd1b9ec70415d37bd0171051d8a4ded8"
+    },
+    {
+      "id": "dm-serif-display",
+      "family": "DM Serif Display",
+      "group": "Editorial serifs",
+      "style": "Substantial display serif",
+      "character": "Assured, editorial, conversational",
+      "use": "Interview openers and single-line statements",
+      "direction": "Use the whole headline on the cut with room for the terminals and descenders.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "interview",
+        "editorial",
+        "portrait",
+        "confident",
+        "news"
+      ],
+      "sample": "The Big Question",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/dmserifdisplay/DMSerifDisplay-Regular.ttf",
+      "sha256": "8cc3643535edf039aa5d95440a8542735e9197e4f4b8d9303e980fefbf5ab616",
+      "licenseSha256": "a3e5cdd67d4571dd0a24fcc968de0efde7ae97ef752daf0906e4767619dd7231"
+    },
+    {
+      "id": "bricolage-grotesque",
+      "family": "Bricolage Grotesque",
+      "group": "Brand and utility",
+      "style": "Expressive variable grotesk",
+      "character": "Resourceful, warm, contemporary",
+      "use": "Product launches and founder-led videos",
+      "direction": "Align the headline's edge with the product shot and use weight for the payoff.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "launch",
+        "bold",
+        "product",
+        "brand",
+        "quickrix",
+        "contemporary"
+      ],
+      "sample": "Worth Keeping",
+      "sampleWeight": 750,
+      "weight": "200 800",
+      "axes": [
+        "opsz",
+        "wght",
+        "wdth"
+      ],
+      "file": "ofl/bricolagegrotesque/BricolageGrotesque[opsz,wdth,wght].ttf",
+      "sha256": "413e7357809ddd12fd80a96a8a396de0e401638d4acd3cb3e37532f0472ac682",
+      "licenseSha256": "4b5a7d8f37f5602621c8a8d7358a6a2e71317e6c231c661e15aef0275d3e07ba"
+    },
+    {
+      "id": "inter",
+      "family": "Inter",
+      "group": "Brand and utility",
+      "style": "Neutral sans with optical sizes",
+      "character": "Clear, focused, familiar",
+      "use": "Captions, interface labels and explainers",
+      "direction": "Keep captions at a stable baseline and let their phrasing follow the speaker.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "captions",
+        "readable",
+        "neutral",
+        "accessibility",
+        "ui",
+        "clean"
+      ],
+      "sample": "Find the next step.",
+      "sampleWeight": 600,
+      "weight": "100 900",
+      "axes": [
+        "opsz",
+        "wght"
+      ],
+      "file": "ofl/inter/Inter[opsz,wght].ttf",
+      "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+      "licenseSha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57"
+    },
+    {
+      "id": "dm-sans",
+      "family": "DM Sans",
+      "group": "Brand and utility",
+      "style": "Low-contrast geometric sans",
+      "character": "Approachable, relaxed, direct",
+      "use": "Onboarding and conversational clips",
+      "direction": "Use sentence case and move the label when the corresponding UI state changes.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "warm",
+        "approachable",
+        "explainer",
+        "onboarding",
+        "ui",
+        "friendly"
+      ],
+      "sample": "Here’s how it works.",
+      "sampleWeight": 500,
+      "weight": "100 1000",
+      "axes": [
+        "opsz",
+        "wght"
+      ],
+      "file": "ofl/dmsans/DMSans[opsz,wght].ttf",
+      "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+      "licenseSha256": "9af36190332437f5ecd09974de43c1f7c77a310a996cdd8ceb25628b458840e1"
+    },
+    {
+      "id": "atkinson-hyperlegible-next",
+      "family": "Atkinson Hyperlegible Next",
+      "group": "Brand and utility",
+      "style": "Sans with distinct character shapes",
+      "character": "Accessible, calm, instructional",
+      "use": "Dense captions and practical explainers",
+      "direction": "Review confusing letters and digits at phone size on the brightest scene.",
+      "roles": [
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "captions",
+        "readable",
+        "accessibility",
+        "educational",
+        "phone",
+        "guidance"
+      ],
+      "sample": "Step 01 · 1 l I",
+      "sampleWeight": 600,
+      "weight": "200 800",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/atkinsonhyperlegiblenext/AtkinsonHyperlegibleNext[wght].ttf",
+      "sha256": "5a455d1cfa099b601ab70751bb9673e8fe1854dc4500c80e1a220d0d75e31745",
+      "licenseSha256": "aca6a428580965d2297d1b718042dd427c2a9443ece3b0d02d758e161e0c4030"
+    },
+    {
+      "id": "ibm-plex-sans",
+      "family": "IBM Plex Sans",
+      "group": "Brand and utility",
+      "style": "Humanist-influenced sans",
+      "character": "Methodical, technical, human",
+      "use": "Research films and product walkthroughs",
+      "direction": "Use paired headings and labels on the same left edge as the workflow.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "engineering",
+        "research",
+        "institutional",
+        "onboarding",
+        "enterprise",
+        "technical"
+      ],
+      "sample": "How the system works",
+      "sampleWeight": 500,
+      "weight": "100 700",
+      "axes": [
+        "wght",
+        "wdth"
+      ],
+      "file": "ofl/ibmplexsans/IBMPlexSans[wdth,wght].ttf",
+      "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
+      "licenseSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "id": "space-grotesk",
+      "family": "Space Grotesk",
+      "group": "Brand and utility",
+      "style": "Grotesk with angular details",
+      "character": "Contemporary, inventive, technical",
+      "use": "Developer products and design studios",
+      "direction": "Hold the headline while one supporting readout changes beneath it.",
+      "roles": [
+        "display",
+        "body"
+      ],
+      "keywords": [
+        "tech",
+        "contemporary",
+        "developer",
+        "product",
+        "geometric"
+      ],
+      "sample": "Build in Public",
+      "sampleWeight": 700,
+      "weight": "300 700",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/spacegrotesk/SpaceGrotesk[wght].ttf",
+      "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+      "licenseSha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72"
+    },
+    {
+      "id": "syne",
+      "family": "Syne",
+      "group": "Brand and utility",
+      "style": "Display sans that widens at heavier weights",
+      "character": "Art-led, playful, independent",
+      "use": "Exhibition announcements and culture reels",
+      "direction": "Give a short name a wide box so its broad shapes stay the main event.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "art",
+        "culture",
+        "experimental",
+        "studio",
+        "wide"
+      ],
+      "sample": "Open Late",
+      "sampleWeight": 700,
+      "weight": "400 800",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/syne/Syne[wght].ttf",
+      "sha256": "ce5ac77142a65cab2248a1a2ebb740b1d4d9c20b52488877d3ff664d1356104a",
+      "licenseSha256": "cc43cdce6f91c57989af8459341c276655e34224e954fa69c2ad700831a742d8"
+    },
+    {
+      "id": "archivo-black",
+      "family": "Archivo Black",
+      "group": "Poster and condensed",
+      "style": "Heavy grotesk display",
+      "character": "Urgent, grounded, emphatic",
+      "use": "Launch announcements and stings",
+      "direction": "Cut to a single word large enough to read on the impact.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "bold",
+        "punchy",
+        "announcement",
+        "impact",
+        "poster"
+      ],
+      "sample": "LIVE NOW",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/archivoblack/ArchivoBlack-Regular.ttf",
+      "sha256": "dd9a89a019b4849f66ab75455fe7bdf931311042cbb0f0f97acc061539703180",
+      "licenseSha256": "3173acd82f8c6159b5b1037b539fcbd4edff68e65c2ea8b9412b5a5ca97b08ff"
+    },
+    {
+      "id": "barlow-condensed",
+      "family": "Barlow Condensed",
+      "group": "Poster and condensed",
+      "style": "ExtraBold condensed sans",
+      "character": "Fast, athletic, kinetic",
+      "use": "Sports cuts and fast portrait titles",
+      "direction": "Snap a two-line lockup through a short mask reveal and hold it at full scale.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "sports",
+        "movement",
+        "punchy",
+        "tall",
+        "condensed",
+        "kinetic"
+      ],
+      "sample": "SET THE PACE",
+      "sampleWeight": 800,
+      "weight": "800",
+      "axes": [],
+      "file": "ofl/barlowcondensed/BarlowCondensed-ExtraBold.ttf",
+      "sha256": "724c9c25952d5f4a2d87185d9767aa006144c5f0d944dc05bf7d5d603551c260",
+      "licenseSha256": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f"
+    },
+    {
+      "id": "bebas-neue",
+      "family": "Bebas Neue",
+      "group": "Poster and condensed",
+      "style": "Tall uppercase display",
+      "character": "Decisive, spare, poster-like",
+      "use": "Event dates and vertical title cards",
+      "direction": "Stack short words so the tall letterforms use the portrait frame well.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "event",
+        "tall",
+        "sports",
+        "condensed",
+        "uppercase",
+        "poster"
+      ],
+      "sample": "FINAL ROUND",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/bebasneue/BebasNeue-Regular.ttf",
+      "sha256": "08e4623805102d819f58601e46e345648846075e363b2ceb23313c2d1c83ec73",
+      "licenseSha256": "72082f6cb4d04be2ecf7cc7d9e1e7d73787f0af8a5a278a47cade70c16b78341"
+    },
+    {
+      "id": "climate-crisis",
+      "family": "Climate Crisis",
+      "group": "Poster and condensed",
+      "style": "Heavy display with a YEAR axis",
+      "character": "Uncompromising, physical, confrontational",
+      "use": "Campaign headlines and one-word beats",
+      "direction": "Give the whole canvas to one word and leave enough time to take in its shape.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "activism",
+        "impact",
+        "campaign",
+        "wide",
+        "experimental",
+        "heavy"
+      ],
+      "sample": "LOOK CLOSER",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [
+        "YEAR"
+      ],
+      "file": "ofl/climatecrisis/ClimateCrisis[YEAR].ttf",
+      "sha256": "4b25279f80e420f9f09dbba13eb14d0beabfa013d17f74bad19cc9fdf4d55523",
+      "licenseSha256": "ff2b5b1644c4fcdf1d5bea41205b694e0d865f3170301e4143a8b6f43ac72ebe"
+    },
+    {
+      "id": "archivo-narrow",
+      "family": "Archivo Narrow",
+      "group": "Poster and condensed",
+      "style": "Narrow grotesk",
+      "character": "Compact, pragmatic, reportorial",
+      "use": "Lower thirds, credits and score graphics",
+      "direction": "Align names and numbers to a stable column as the subject changes.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "news",
+        "narrow",
+        "lower",
+        "third",
+        "credits",
+        "report",
+        "data"
+      ],
+      "sample": "Field Report · Live",
+      "sampleWeight": 600,
+      "weight": "400 700",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/archivonarrow/ArchivoNarrow[wght].ttf",
+      "sha256": "adbe027f625c8393ae0f6e174e32e233dda485bc3eda5153ce428275394ef97f",
+      "licenseSha256": "b2087ef3fb91248e346600d19021249152a9688efea72905aa1996bb16a4c8de"
+    },
+    {
+      "id": "ibm-plex-mono",
+      "family": "IBM Plex Mono",
+      "group": "Monospace",
+      "style": "Medium monospaced face",
+      "character": "Precise, engineered, procedural",
+      "use": "Terminal shots, metrics and code",
+      "direction": "Keep numeric columns fixed while the values update.",
+      "roles": [
+        "display",
+        "body"
+      ],
+      "keywords": [
+        "terminal",
+        "mono",
+        "code",
+        "metric",
+        "data",
+        "engineering",
+        "technical"
+      ],
+      "sample": "$ build --watch",
+      "sampleWeight": 500,
+      "weight": "500",
+      "axes": [],
+      "file": "ofl/ibmplexmono/IBMPlexMono-Medium.ttf",
+      "sha256": "a9b4c49bb299e05b5f6c481e7fb5e78943d2793249a0c8874ab574a2d1ea6755",
+      "licenseSha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "id": "dm-mono",
+      "family": "DM Mono",
+      "group": "Monospace",
+      "style": "Regular monospaced face",
+      "character": "Observational, understated, archival",
+      "use": "Timecodes, footnotes and reference labels",
+      "direction": "Introduce the smallest label after the image has established its context.",
+      "roles": [
+        "body"
+      ],
+      "keywords": [
+        "timecode",
+        "notes",
+        "metadata",
+        "understated",
+        "editorial",
+        "mono"
+      ],
+      "sample": "TC 00:14:08",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/dmmono/DMMono-Regular.ttf",
+      "sha256": "55b4c98f123daebb3ed27947ba47b2af00554fc6284d639a540bcef5e6258ad2",
+      "licenseSha256": "2bada5ea45c3c63b7f1ea1f88ce9672c9e4f0c42b2c3b7378949084fe55a3066"
+    },
+    {
+      "id": "space-mono",
+      "family": "Space Mono",
+      "group": "Monospace",
+      "style": "Bold monospaced face with quirky details",
+      "character": "Retro-digital, playful, space-age",
+      "use": "Science reels and analog-inspired titles",
+      "direction": "Cut complete words on an edit beat and use the fixed width to align frames.",
+      "roles": [
+        "display",
+        "body"
+      ],
+      "keywords": [
+        "retro",
+        "digital",
+        "science",
+        "sci-fi",
+        "space",
+        "mono"
+      ],
+      "sample": "SIGNAL RECEIVED",
+      "sampleWeight": 700,
+      "weight": "700",
+      "axes": [],
+      "file": "ofl/spacemono/SpaceMono-Bold.ttf",
+      "sha256": "405e73d41afb7e5906efce206a326af5c956f38e255f35421c260e861e599c59",
+      "licenseSha256": "8e4ee42b2553e1e01504e61cb0d46d148cd8c9e5eacaa3622a7df2d4f2955b9f"
+    },
+    {
+      "id": "oxanium",
+      "family": "Oxanium",
+      "group": "Geometric and technical",
+      "style": "Square geometric display",
+      "character": "Futuristic, mechanical, game-like",
+      "use": "Science visualizations and status readouts",
+      "direction": "Frame one or two short words beside the object whose status changes.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "futuristic",
+        "geometry",
+        "sci-fi",
+        "games",
+        "hud",
+        "technical"
+      ],
+      "sample": "SYSTEM ONLINE",
+      "sampleWeight": 700,
+      "weight": "200 800",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/oxanium/Oxanium[wght].ttf",
+      "sha256": "2ce01d946e1e1ffc8d7eecfffbda8623bedd63eaf811a20488c4b69af45babb0",
+      "licenseSha256": "fe17c0f2581d71b4e1ea7e636e7f4877c29223e11bb1dd1a871e8c3f2a86336b"
+    },
+    {
+      "id": "rajdhani",
+      "family": "Rajdhani",
+      "group": "Geometric and technical",
+      "style": "SemiBold squared condensed sans",
+      "character": "Lean, industrial, purposeful",
+      "use": "Sports scores, signage and industrial callouts",
+      "direction": "Set short values on a consistent baseline and cue their change to the cut.",
+      "roles": [
+        "display",
+        "body"
+      ],
+      "keywords": [
+        "sports",
+        "score",
+        "industrial",
+        "signage",
+        "narrow",
+        "technical",
+        "devanagari"
+      ],
+      "sample": "ROUND 04 · 01:24",
+      "sampleWeight": 600,
+      "weight": "600",
+      "axes": [],
+      "file": "ofl/rajdhani/Rajdhani-SemiBold.ttf",
+      "sha256": "94bbd25a18ca665999feb05a537de9fd2b860dcfb78bbe9ca00270825bf235da",
+      "licenseSha256": "f62ef357d3a1c3d27edd35a6e1ba350e8a8d13499797964eeadefbf0b3b15d1f"
+    },
+    {
+      "id": "unbounded",
+      "family": "Unbounded",
+      "group": "Geometric and technical",
+      "style": "Expanded variable sans",
+      "character": "Big, synthetic, architectural",
+      "use": "Album teasers and broad launch statements",
+      "direction": "Use as a single wide line or a carefully composed break across a wide frame.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "wide",
+        "futurism",
+        "album",
+        "bold",
+        "experimental",
+        "geometric"
+      ],
+      "sample": "OUTSIDE THE GRID",
+      "sampleWeight": 700,
+      "weight": "200 900",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/unbounded/Unbounded[wght].ttf",
+      "sha256": "323b511be380c8d474ef030686b71aedde501f8d9cd46da558b7c40454372c3f",
+      "licenseSha256": "31e5d4e83955e7103c34570dd49b0570ef490800bd65b42923c0dd02445263b3"
+    },
+    {
+      "id": "caveat",
+      "family": "Caveat",
+      "group": "Expressive and handwritten",
+      "style": "Loose handwritten script",
+      "character": "Personal, spontaneous, intimate",
+      "use": "Personal notes and B-roll annotations",
+      "direction": "Let the whole note appear with the object it points to, then give it a beat to read.",
+      "roles": [
+        "display",
+        "face-title"
+      ],
+      "keywords": [
+        "handwritten",
+        "personal",
+        "note",
+        "warm",
+        "journal",
+        "annotation"
+      ],
+      "sample": "A little reminder",
+      "sampleWeight": 600,
+      "weight": "400 700",
+      "axes": [
+        "wght"
+      ],
+      "file": "ofl/caveat/Caveat[wght].ttf",
+      "sha256": "0bdb6b660482d31531b3945849fba5916b3ef8695da7024a9e6b9ee3c4157988",
+      "licenseSha256": "1f9d81d094273d82f3898a1ee8b598a717d050ecbf5ff7bede105b704880157b"
+    },
+    {
+      "id": "gochi-hand",
+      "family": "Gochi Hand",
+      "group": "Expressive and handwritten",
+      "style": "Rounded marker handwriting",
+      "character": "Casual, friendly, tactile",
+      "use": "Sticky notes and informal product explainers",
+      "direction": "Place one short note on the surface that motivates it and hold the framing there.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "handwritten",
+        "sticky",
+        "note",
+        "casual",
+        "playful",
+        "quickrix"
+      ],
+      "sample": "Save this for later",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/gochihand/GochiHand-Regular.ttf",
+      "sha256": "c46b029ab4846b2935e301af0b2cf85a1d74d2858e6a33636a3e64cf3cc4696b",
+      "licenseSha256": "b36cb03d6ddc163452d9935ce6f325741434272d3889acf42cc23584f31a85bf"
+    },
+    {
+      "id": "shrikhand",
+      "family": "Shrikhand",
+      "group": "Expressive and handwritten",
+      "style": "Heavy slanted Gujarati and Latin display",
+      "character": "Lively, graphic, celebratory",
+      "use": "Food campaigns and culture titles",
+      "direction": "Give the slant room at the edges and land the whole phrase on the cut.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "gujarati",
+        "food",
+        "graphic",
+        "lively",
+        "expressive",
+        "retro"
+      ],
+      "sample": "નવી શરૂઆત",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/shrikhand/Shrikhand-Regular.ttf",
+      "sha256": "8ba32f6d6a96fb8dbc92fc1acfbc4d2123d5348063d89b2c3dd784e7afcb81af",
+      "licenseSha256": "325e890b8b26fe0a683c3ba24c506d902bdd7034d9c47bd7fa2bb72b5433b9c9"
+    },
+    {
+      "id": "jacquard-12",
+      "family": "Jacquard 12",
+      "group": "Expressive and handwritten",
+      "style": "Pixel-constructed blackletter",
+      "character": "Ornate, uncanny, archival-digital",
+      "use": "Chapter cards and indie game intros",
+      "direction": "Set a few words large and hold still so the angular detail reads.",
+      "roles": [
+        "display"
+      ],
+      "keywords": [
+        "blackletter",
+        "game",
+        "archival",
+        "ornate",
+        "pixel",
+        "experimental"
+      ],
+      "sample": "AFTER DARK",
+      "sampleWeight": 400,
+      "weight": "400",
+      "axes": [],
+      "file": "ofl/jacquard12/Jacquard12-Regular.ttf",
+      "sha256": "b1560583565a37f3d3a25cf2572df3efd2d773ecdcbb459dcd7ea0398cb840d1",
+      "licenseSha256": "dea0ea45c7835a51c20d24b9ef2ac03f5beec858995f5eda085540f1f7c713b7"
+    },
+    {
+      "id": "noto-sans-devanagari",
+      "family": "Noto Sans Devanagari",
+      "group": "Multilingual sans",
+      "style": "Devanagari sans with variable weight and width",
+      "character": "Clear, even, practical",
+      "use": "Hindi explainers and captions",
+      "direction": "Give vowel marks room above and below the line and preview the complete phrase.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "hindi",
+        "devanagari",
+        "multilingual",
+        "captions",
+        "explainer",
+        "readable"
+      ],
+      "sample": "एक नई शुरुआत",
+      "sampleWeight": 500,
+      "weight": "100 900",
+      "axes": [
+        "wght",
+        "wdth"
+      ],
+      "file": "ofl/notosansdevanagari/NotoSansDevanagari[wdth,wght].ttf",
+      "sha256": "14ec4af41f27482216d1c2229f417ff9b1425e1babb014e57d1d40d03229853e",
+      "licenseSha256": "a216f6f8d85c7228093e0ee5e258d9d377e6671f68acb4db1930b29583d0f331"
+    },
+    {
+      "id": "zen-kaku-gothic-new",
+      "family": "Zen Kaku Gothic New",
+      "group": "Multilingual sans",
+      "style": "Medium Japanese Gothic sans",
+      "character": "Understated, steady, contemporary",
+      "use": "Japanese titles, captions and location cards",
+      "direction": "Use one quiet axis of alignment and test line breaks with the real Japanese copy.",
+      "roles": [
+        "display",
+        "body",
+        "caption"
+      ],
+      "keywords": [
+        "japanese",
+        "cjk",
+        "multilingual",
+        "captions",
+        "travel",
+        "calm"
+      ],
+      "sample": "次のシーン",
+      "sampleWeight": 500,
+      "weight": "500",
+      "axes": [],
+      "file": "ofl/zenkakugothicnew/ZenKakuGothicNew-Medium.ttf",
+      "sha256": "651a3f7280b7f36262601ee76d8388a8dc4372dcc67aff025a608939a562b525",
+      "licenseSha256": "0fac78a235c98d640cb06332eb5362c211d86fa03c011df438c35005d22ad2c7"
+    }
+  ]
+}

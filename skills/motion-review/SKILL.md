@@ -21,4 +21,6 @@ In Remotion, animate from `useCurrentFrame()`/`useVideoConfig()`, with clamped i
 4. Fix visible defects, render the affected frames again, then verify their transitions. Automated checks supplement this pass.
 5. Check the ending and, when audio exists, its timing and final decay. Do not add music when the user deferred it.
 
+Use the storyboard to find review times. For an exported `out/film.mp4`, call the `review_frame` MCP tool with `projectId` and `atSeconds`, or run `vh review-frame . --at 8.5 --out out/review-8.5.jpg`. Both use FFmpeg on the host. Open the resulting image in a viewer or use a vision-capable reviewer. Compare the same time in the revised export to confirm the fix.
+
 Report what you actually checked. Distinguish a preview, a rendered MP4 and a tested provider integration. Keep the original design and asset records with the editable project. A good-looking frame is not evidence that the entire film was watched.

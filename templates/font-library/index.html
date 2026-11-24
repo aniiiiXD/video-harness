@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Font library · Video Harness</title>
+  <style>
+    /* FONT FACES */
+    :root {
+      color-scheme: light;
+      --paper: #f4f2eb;
+      --ink: #202824;
+      --quiet: #535c55;
+      --rule: #c8cdc3;
+      --accent: #244f3c;
+      font-family: inter, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { max-width: 92rem; margin: 0 auto; padding: clamp(1.1rem, 5vw, 4.75rem); }
+    h1, h2, p { margin: 0; }
+    h1 {
+      font: 400 clamp(4rem, 10vw, 8rem)/.81 "instrument-serif", Georgia, serif;
+      letter-spacing: -.03em;
+      margin: 1.15rem 0 2.25rem;
+    }
+    .filters {
+      display: grid;
+      grid-template-columns: 1fr 1fr minmax(11rem, .48fr);
+      gap: .85rem;
+      padding: 1.25rem 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--rule);
+    }
+    label { display: grid; align-content: start; gap: .45rem; color: var(--quiet); font-size: .82rem; font-weight: 600; }
+    input, select {
+      min-width: 0;
+      font: 400 .94rem/1.2 inter, sans-serif;
+      color: var(--ink);
+      background: #fbfaf5;
+      border: 1px solid var(--rule);
+      border-radius: .18rem;
+      padding: .72rem .74rem;
+    }
+    input:focus, select:focus, a:focus { outline: 2px solid var(--accent); outline-offset: .15rem; }
+    #count { margin: .9rem 0 .6rem; color: var(--quiet); font-size: .86rem; }
+    .entry {
+      display: grid;
+      grid-template-columns: minmax(10rem, .78fr) minmax(0, 1.65fr) minmax(14rem, 1fr);
+      align-items: center;
+      gap: clamp(1rem, 2.5vw, 2.5rem);
+      border-bottom: 1px solid var(--rule);
+      padding: 1.3rem 0 1.55rem;
+    }
+    .entry[hidden] { display: none; }
+    .entry:first-child { border-top: 1px solid var(--rule); }
+    .family { font-size: 1.13rem; line-height: 1.19; font-weight: 650; margin: .15rem 0 .43rem; }
+    .group, .source { font-size: .75rem; color: var(--accent); }
+    .style { color: var(--quiet); font-size: .86rem; line-height: 1.43; }
+    .source { display: inline-block; margin-top: .63rem; text-underline-offset: .2em; }
+    .sample { overflow-wrap: anywhere; line-height: 1.06; font-size: clamp(2.35rem, 4.1vw, 4.3rem); padding: .18em 0; }
+    .meaning { font-weight: 600; line-height: 1.34; }
+    .use, .direction { color: var(--quiet); font-size: .87rem; line-height: 1.43; margin-top: .35rem; }
+    @media (max-width: 790px) {
+      .filters { grid-template-columns: 1fr 1fr; }
+      .filters label:last-child { grid-column: span 2; }
+      .entry { grid-template-columns: 1fr 1.35fr; }
+      .entry .sample { grid-row: 2; grid-column: span 2; }
+    }
+    @media (max-width: 460px) {
+      .filters, .entry { grid-template-columns: 1fr; gap: .85rem; }
+      .entry .sample, .filters label:last-child { grid-column: auto; grid-row: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Font library</h1>
+    <div class="filters">
+      <label>Search by mood or use<input id="query" type="search" placeholder="Quiet editorial, sports, captions" autocomplete="off"></label>
+      <label>Try your own words<input id="copy" type="text" placeholder="Type a title to compare" maxlength="160"></label>
+      <label>Text role<select id="role">
+        <option value="">All roles</option>
+        <option value="display">Display</option>
+        <option value="body">Body and labels</option>
+        <option value="face-title">Behind the speaker</option>
+        <option value="caption">Captions</option>
+      </select></label>
+    </div>
+  </header>
+  <main>
+    <p id="count" aria-live="polite"></p>
+    <div id="entries"></div>
+  </main>
+  <script id="catalog" type="application/json">__FONT_LIBRARY__</script>
+  <script>
+    const fonts = JSON.parse(document.getElementById('catalog').textContent);
+    const entries = document.getElementById('entries');
+    const query = document.getElementById('query');
+    const copy = document.getElementById('copy');
+    const role = document.getElementById('role');
+    const count = document.getElementById('count');
+    const normalize = text => text.toLowerCase().normalize('NFKD').replace(/\p{M}/gu, '');
+    const ignored = new Set(['font', 'fonts', 'typeface', 'typefaces', 'for', 'a', 'the', 'with', 'and']);
+
+    function element(tag, className, text) {
+      const node = document.createElement(tag);
+      node.className = className;
+      node.textContent = text;
+      return node;
+    }
+
+    const rows = fonts.map(font => {
+      const row = element('article', 'entry', '');
+      const label = element('div', 'label', '');
+      const link = element('a', 'source', 'Source and license');
+      link.href = font.source;
+      label.append(
+        element('p', 'group', font.group),
+        element('h2', 'family', font.family),
+        element('p', 'style', `${font.style} · ${font.sampleWeight}`), link
+      );
+      const sample = element('p', 'sample', font.sample);
+      sample.style.fontFamily = font.id;
+      sample.style.fontWeight = font.sampleWeight;
+      const details = element('div', 'details', '');
+      details.append(
+        element('p', 'meaning', font.character),
+        element('p', 'use', font.use),
+        element('p', 'direction', font.direction)
+      );
+      const searchable = normalize([
+        font.family, font.group, font.style, font.character, font.use, font.direction,
+        ...font.roles, ...font.keywords
+      ].join(' '));
+      row.append(label, sample, details);
+      entries.append(row);
+      return {font, row, sample, searchable};
+    });
+
+    function refresh() {
+      const words = (normalize(query.value).match(/[\p{L}\p{N}]+/gu) || [])
+        .filter(word => !ignored.has(word))
+        .map(word => /^subtitles?$/.test(word) ? 'caption' : word);
+      let visible = 0;
+      for (const {font, row, sample, searchable} of rows) {
+        const show = (!role.value || font.roles.includes(role.value)) && words.every(word => searchable.includes(word));
+        row.hidden = !show;
+        sample.textContent = copy.value.trim() || font.sample;
+        visible += Number(show);
+      }
+      count.textContent = visible === fonts.length ? `${visible} faces` : `${visible} of ${fonts.length} faces`;
+    }
+
+    query.addEventListener('input', refresh);
+    copy.addEventListener('input', refresh);
+    role.addEventListener('change', refresh);
+    refresh();
+  </script>
+</body>
+</html>

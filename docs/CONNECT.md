@@ -4,7 +4,7 @@ Video Harness exposes MCP tools, resources and a directing prompt. It does not d
 
 ## Local stdio
 
-Install the repository dependencies with `npm ci`. Start the server using a client's MCP configuration:
+Install dependencies with `npm ci` in a Git checkout or `npm install` in an unpacked Video Harness archive. Start the server using a client's MCP configuration:
 
 ```json
 {
@@ -51,17 +51,35 @@ All authenticated clients share one trusted workspace and the host's provider ac
 
 Run one server process per workspace. Mutation locks and the single render worker are process-local; multiple replicas are not supported. Speech claims persist on disk and prevent resubmission even after a restart. Preserve the workspace volume, including `.harness/`.
 
+## Make a film from a repository
+
+Give the coding agent the Video Harness checkout and the product repository or site URL. It can read [AGENTS.md](../AGENTS.md) and use the CLI, or call the `direct-film` prompt through MCP. For custom scenes and locally staged captures, the agent needs access to the film project on the host.
+
+> Make a 30-second product walkthrough from the repository I give you. Show one real workflow and its result. Use Video Harness to build the edit, export the MP4, and fix any readability issues you see in the exported frames. Leave the timeline editable.
+
+An agent with access to an LTX workflow can send it prompts and reference images for supporting shots. Stage the resulting MP4s inside the film project and import them with `asset_import` or `vh import`, using the workflow as the source and recording the applicable usage rights. Use the actual product captures for claims about the product. [LTX pipelines](https://github.com/Lightricks/LTX-2/blob/main/packages/ltx-pipelines/README.md)
+
+After export, use `review_frame` with `projectId` and `atSeconds` for a JPEG that a vision-capable client can inspect. The host needs FFmpeg. Sample text at peak zoom, check both sides of cuts, and revisit timestamps after revisions. Local agents can also extract a frame with the CLI.
+
+```sh
+node bin/vh.mjs review-frame ./my-product-film --at 8.5 --out ./my-product-film/out/review-8.5.jpg
+```
+
+Keep the requested MP4, `film.json`, scene source, and source assets together so another agent can revise the cut. [Motion Review skill](../skills/motion-review/SKILL.md)
+
 ## Available workflow
 
 1. Read `video-harness://skills/journey-director`, or use the `direct-film` prompt with a brief.
-2. `project_create` makes a complete synthetic starter film. `project_read` returns its manifest and revision.
-3. Replace the concept with the user's story using `project_update`. Supply the revision you read; stale or invalid updates are rejected.
+2. Use `project_read` to find an existing project by ID. `project_create` makes a starter film when a project is new.
+3. Read the saved direction with `project_brief_read`. Use `project_brief_update` to record the request, look, format and progress as the user directs the edit. Replace the concept with the user's story using `project_update` and the revision returned by `project_read`.
 4. Use `images_search` and `image_fetch`, or `asset_import` for project-relative files staged on the host. `design_export` exports a selected OpenPencil node through the installed host CLI. This release has no remote file-upload endpoint.
 5. `project_storyboard` returns exact frame ranges; `project_build` regenerates sequences. Custom component authoring is still done in the project's source through a coding agent with host access. MCP editing currently covers the manifest, not arbitrary source code.
 6. For voice, use `tts_voices`, `tts_prepare`, `tts_generate`, `tts_status`. See [Smallest.ai](SMALLEST.md). No synthesis happens during project creation or preparation.
-7. `render_start` with `kind: "setup"` installs renderer dependencies; with `kind: "render"` exports the full MP4. These require explicit host-work authorization. Poll `render_status`; do not repeat the start call to poll. Only one setup/render job can run at a time. Jobs lock project mutations until they finish.
+7. `render_start` with `kind: "setup"` installs renderer dependencies. With `kind: "render"` it exports the full MP4. These require explicit host-work authorization. Poll `render_status` for progress. One setup or render job can run at a time and holds the project's timeline and asset mutation lock until it finishes.
 8. The completed output is `out/film.mp4` inside the project. HTTP clients can download `/projects/PROJECT_ID/film.mp4` using the same bearer token. The route is authenticated and supports normal file serving; do not embed the private token in a public URL.
 
 Render job records persist, but jobs are not a durable distributed queue. A server restart reports unfinished jobs as `unknown`; inspect the host before resubmitting. This release does not support worker cancellation through MCP. Source changes made outside the server are not covered by mutation locks.
 
-The four directing/sourcing/design/review skills are exposed as MCP resources. The existing Suno adapter accepts an independently authenticated MCP client; this server does not yet proxy Suno sign-in or music tools.
+The skills are exposed as MCP resources. Read `video-harness://skills/motion-typography` for directing and setting type. Read `video-harness://skills/talking-head-edit` for timed captions, titles behind the face, and a local rendering workflow. The existing Suno adapter accepts an independently authenticated MCP client; this server does not yet proxy Suno sign-in or music tools.
+
+Use `fonts_search` with a mood or a text role to search the local catalog. Set `provider` to `google` for live family discovery, with an optional Google category such as `/Expressive/Calm` or a language tag such as `en_Latn`. Use `font_fetch` with a catalog ID to import one verified font with its OFL notice into the project. [Google Design MCP search](https://developers.google.com/design-mcp/reference/mcp/tools_list/search_fonts)
