@@ -12,6 +12,7 @@ test('new project builds a complete gapless timeline and installs project-local 
  const rows=await storyboard(dir);assert.equal(rows[0].fromFrame,0);assert.equal(rows.at(-1).toFrame,929);
  for(let i=1;i<rows.length;i++)assert.equal(rows[i].fromFrame,rows[i-1].toFrame+1);
  await fs.access(path.join(dir,'.agents/skills/openpencil-to-film/SKILL.md'));
+ await fs.access(path.join(dir,'.agents/skills/ltx-footage/SKILL.md'));
  await fs.access(path.join(dir,'.agents/skills/talking-head-edit/scripts/render_face_titles.py'));
  await fs.writeFile(path.join(dir,'src/Scene.jsx'),'user edit');await build(dir);
  assert.equal(await fs.readFile(path.join(dir,'src/Scene.jsx'),'utf8'),'user edit');

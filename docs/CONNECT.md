@@ -57,7 +57,7 @@ Give the coding agent the Video Harness checkout and the product repository or s
 
 > Make a 30-second product walkthrough from the repository I give you. Show one real workflow and its result. Use Video Harness to build the edit, export the MP4, and fix any readability issues you see in the exported frames. Leave the timeline editable.
 
-An agent with access to an LTX workflow can send it prompts and reference images for supporting shots. Stage the resulting MP4s inside the film project and import them with `asset_import` or `vh import`, using the workflow as the source and recording the applicable usage rights. Use the actual product captures for claims about the product. [LTX pipelines](https://github.com/Lightricks/LTX-2/blob/main/packages/ltx-pipelines/README.md)
+For LTX footage, give the agent access to the working ComfyUI workflow, Python command, or hosted connection. It can use `video-harness://skills/ltx-footage` to direct a shot, run the available pipeline, import the resulting MP4, and review the cut. Finished LTX clips can start at import. [LTX Footage skill](../skills/ltx-footage/SKILL.md)
 
 After export, use `review_frame` with `projectId` and `atSeconds` for a JPEG that a vision-capable client can inspect. The host needs FFmpeg. Sample text at peak zoom, check both sides of cuts, and revisit timestamps after revisions. Local agents can also extract a frame with the CLI.
 

@@ -24,12 +24,16 @@ test('MCP client discovers tools, reads skills and revises a film with conflict 
  const w=await fixture(t),server=createServer(w),client=new Client({name:'test-agent',version:'1'});
  const [a,b]=InMemoryTransport.createLinkedPair();await server.connect(a);await client.connect(b);t.after(()=>client.close());
  const tools=(await client.listTools()).tools.map(x=>x.name);for(const name of ['project_create','tts_prepare','render_start','design_export','fonts_search','font_fetch','review_frame'])assert.ok(tools.includes(name));
- assert.equal((await client.listResources()).resources.length,6);
+ assert.equal((await client.listResources()).resources.length,7);
  assert.match((await client.readResource({uri:'video-harness://skills/journey-director'})).contents[0].text,/journey/i);
  assert.match((await client.readResource({uri:'video-harness://skills/talking-head-edit'})).contents[0].text,/behind the face/i);
  assert.match((await client.readResource({uri:'video-harness://skills/motion-typography'})).contents[0].text,/tracking/);
+ const ltx=await client.readResource({uri:'video-harness://skills/ltx-footage'});
+ assert.equal(ltx.contents[0].mimeType,'text/markdown');
+ assert.match(ltx.contents[0].text,/^---\nname: ltx-footage\n/);
  const prompt=await client.getPrompt({name:'direct-film',arguments:{brief:'Make a product walkthrough.'}});
  assert.match(prompt.messages[0].content.text,/review_frame/);
+ assert.match(prompt.messages[0].content.text,/video-harness:\/\/skills\/ltx-footage/);
  const fonts=decode(await client.callTool({name:'fonts_search',arguments:{query:'quiet editorial',role:'display'}}));
  assert.equal(fonts.results[0].family,'Instrument Serif');
  const created=decode(await client.callTool({name:'project_create',arguments:{projectId:'relay'}}));
@@ -179,7 +183,7 @@ test('stdio executable connects without contaminating the MCP stream',async t=>{
  const w=await fixture(t),client=new Client({name:'stdio-agent',version:'1'});
  const transport=new StdioClientTransport({command:process.execPath,args:[path.join(root,'bin/vh.mjs'),'mcp','--workspace',w.directory],stderr:'pipe'});
  await client.connect(transport);t.after(()=>client.close());
- assert.equal((await client.listResources()).resources.length,6);
+ assert.equal((await client.listResources()).resources.length,7);
  assert.equal(decode(await client.callTool({name:'project_create',arguments:{projectId:'stdio-film'}})).validation.seconds,31);
 });
 

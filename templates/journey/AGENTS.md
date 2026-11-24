@@ -2,6 +2,7 @@
 
 Use `.agents/skills/journey-director/SKILL.md` for a new film or narrative revision.
 Use the image-sourcing, openpencil-to-film and motion-review skills when those tasks apply.
+Use `.agents/skills/ltx-footage/SKILL.md` for shots from an LTX runner or supplied LTX clips.
 Use `.agents/skills/talking-head-edit/SKILL.md` for spoken clips, timed captions and titles behind the speaker.
 Use `.agents/skills/motion-typography/SKILL.md` to choose and direct type for each film.
 

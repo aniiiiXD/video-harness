@@ -86,7 +86,7 @@ node bin/vh.mjs render projects/my-film
 
 ## Use the skills
 
-`vh init` copies the six skills into `.agents/skills/` and includes an `AGENTS.md` for the project. Ask the agent to use the relevant skills on your brief. For example, ask it to use Journey Director and Motion Typography to make a product cut from a repo, save the direction, and show the first complete preview.
+`vh init` copies the film skills into `.agents/skills/` and includes an `AGENTS.md` for the project. Ask the agent to use the relevant skills on your brief. For example, ask it to use Journey Director and Motion Typography to make a product cut from a repo, save the direction, and show the first complete preview.
 
 | Skill | When to use it | What to give it |
 |---|---|---|
@@ -96,6 +96,7 @@ node bin/vh.mjs render projects/my-film
 | [OpenPencil to Film](../skills/openpencil-to-film/SKILL.md) | Turn wireframes and design states into shots | A design file and the screen nodes the film should show |
 | [Image Sourcing](../skills/image-sourcing/SKILL.md) | Find imagery for a shot | The subject, action, setting, framing, and usage rights needed |
 | [Motion Review](../skills/motion-review/SKILL.md) | Check cut timing, legibility, alignment, and camera moves | The stitched preview or export and its target screen size |
+| [LTX Footage](../skills/ltx-footage/SKILL.md) | Direct generated shots and integrate them with the editable cut | An available LTX runner or finished MP4s |
 
 Use `node bin/vh.mjs skills ./my-video-skills` to copy the skills to a new folder. An MCP client can read the same instructions at `video-harness://skills/<skill-name>` and start a brief with the `direct-film` prompt. The server exposes project, asset, font, storyboard, and render operations. A coding agent with project access authors custom React scenes. [MCP connection guide](CONNECT.md)
 

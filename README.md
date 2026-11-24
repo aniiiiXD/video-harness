@@ -50,6 +50,7 @@ See the video guide for examples, the full editing workflow, font ideas, and the
 | MCP | Project and brief tools, portable skill resources, directing prompt; stdio and authenticated Streamable HTTP |
 | Preview/export | Remotion Studio and explicit H.264 MP4 export |
 | Visual review | Motion Review skill and JPEG frames from the exported cut over CLI or MCP |
+| LTX footage | [Direct, import, and review shots](skills/ltx-footage/SKILL.md) using an available LTX runner |
 | Narration | Smallest.ai Pro voices, prepared generation plans, persisted receipts and independent voice cues |
 | Suno | Official MCP setup plus a host adapter; sign-in and live tool mapping remain separate |
 
